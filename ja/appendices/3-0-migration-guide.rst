@@ -328,17 +328,23 @@ Configure
   
 - A new config engine :php:class:`Cake\\Core\\Configure\\Engine\JsonConfig` has
   been added.
+- 新しい設定エンジン :php:class:`Cake\\Core\\Configure\\Engine\JsonConfig` が追加されました。
 
 Object
 ------
 
-The ``Object`` class has been removed. It formerly contained a grab bag of
-methods that were used in various places across the framework. The most useful
-of these methods have been extracted into traits. You can use the
-:php:trait:`Cake\\Log\\LogTrait` to access the ``log()`` method. The
-:php:trait:`Cake\\Routing\\RequestActionTrait` provides ``requestAction()``.
+.. The ``Object`` class has been removed. It formerly contained a grab bag of
+.. methods that were used in various places across the framework. The most useful
+.. of these methods have been extracted into traits. You can use the
+.. :php:trait:`Cake\\Log\\LogTrait` to access the ``log()`` method. The
+.. :php:trait:`Cake\\Routing\\RequestActionTrait` provides ``requestAction()``.
+
+``Object`` クラスは削除されました。 これは、以前フレームワークの様々な場所で使用された方法の種種雑多なものを含んでいました。
+トレイトの中に絞りこまれたこれらのメソッドは最も有料です。``log()`` へのアクセスは　:php:trait:`Cake\\Log\\LogTrait` を使用することができます。 :php:trait:`Cake\\Routing\\RequestActionTrait` は  ``requestAction()`` を提供します。
 
 Console
+=======
+コンソール
 =======
 
 .. The ``cake`` executable has been moved from the ``app/Console`` directory to the
@@ -374,34 +380,46 @@ Shell
 .. - ``Shell::param()`` has been added as convenience access to the params.
 - ``Shell::param()`` はparamsへ便利にアクセスするために追加されました。
 
-Additionally all shell methods will be transformed to camel case when invoked.
-For example, if you had a ``hello_world()`` method inside a shell and invoked it
-with ``bin/cake my_shell hello_world``, you will need to rename the method
-to ``helloWorld``. There are no changes required in the way you invoke commands.
+.. Additionally all shell methods will be transformed to camel case when invoked.
+.. For example, if you had a ``hello_world()`` method inside a shell and invoked it
+.. with ``bin/cake my_shell hello_world``, you will need to rename the method
+.. to ``helloWorld``. There are no changes required in the way you invoke commands.
 
-
+さらにすべてのシェル関数を呼び出す時は、キャメルケースへ変換しましょう。
+例えば、``bin/cake my_shell hello_world``のようにシェルで ``hello_world()`` を使用するとしたら
+`helloWorld`` へリネームする必要があります。
+コマンドを呼び出す方法に変更はありません。
 
 ConsoleOptionParser
 -------------------
 
-- ``ConsoleOptionParser::merge()`` has been added to merge parsers.
+.. - ``ConsoleOptionParser::merge()`` has been added to merge parsers.
+- ``ConsoleOptionParser::merge()`` がパーサーをマージするために追加されました。
 
 ConsoleInputArgument
 --------------------
 
-- ``ConsoleInputArgument::isEqualTo()`` has been added to compare two arguments.
+.. - ``ConsoleInputArgument::isEqualTo()`` has been added to compare two arguments.
+- ``ConsoleInputArgument::isEqualTo()`` 2つの引数を比較するために追加されました。
 
 Shell / Task
 ============
+シェル / タスク
+============
 
-Shells and Tasks have been moved from ``Console/Command`` and
-``Console/Command/Task`` to ``Shell`` and ``Shell/Task``.
+.. Shells and Tasks have been moved from ``Console/Command`` and
+.. ``Console/Command/Task`` to ``Shell`` and ``Shell/Task``.
+シェルとタスクは ``Console/Command`` と ``Console/Command/Task`` から ``Shell`` と ``Shell/Task`` へ移動しました。
 
-ApiShell Removed
+.. ApiShell Removed
+.. ----------------
+Apiシェルは削除されました
 ----------------
 
-The ApiShell was removed as it didn't provide any benefit over the file source
-itself and the online documentation/`API <http://api.cakephp.org/>`_.
+.. The ApiShell was removed as it didn't provide any benefit over the file source
+.. itself and the online documentation/`API <http://api.cakephp.org/>`_.
+
+多くの利点を提供しなかったとしてApiShellをソースとドキュメント/`API <http://api.cakephp.org/>`_. を削除しました。
 
 SchemaShell Removed
 -------------------
