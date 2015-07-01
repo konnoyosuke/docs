@@ -29,16 +29,29 @@ Requirements
 .. warning::
 
     CakePHP 3.0 will not work if you do not meet the above requirements.
+    上記の条件を満たしていない場合はCakePHP3.0は動作しません。
 
 Upgrade Tool
+============
+アップグレードツール
 ============
 
 While this document covers all the breaking changes and improvements made in
 CakePHP 3.0, we've also created a console application to help you easily
-complete some of the time consuming mechanical changes. You can `get the upgrade
-tool from github <https://github.com/cakephp/upgrade>`_.
+complete some of the time consuming mechanical changes. 
+
+この文書は、CakePHPの3.0で作られたすべての重大な変更と改良をカバーし、
+我々はまた、時間のかかる機能変更を用意に完了させる手助けとなるコンソールアプリケーションを作成しました。
+
+下記からアップグレードツールを入手できます。
+`get the upgrade tool from github <https://github.com/cakephp/upgrade>`_.
+
+
 
 Application Directory Layout
+============================
+
+ディレクトリ構成
 ============================
 
 The application directory layout has changed and now follows
@@ -46,14 +59,27 @@ The application directory layout has changed and now follows
 `app skeleton <https://github.com/cakephp/app>`_ project as a reference point
 when updating your application.
 
+ディレクトリ構成は`PSR-4 <http://www.php-fig.org/psr/psr-4/>`_.に習って変更しています。
+あなたのアプリケーションをアップデートする時は基準となる`app skeleton <https://github.com/cakephp/app>`_
+ プロジェクトを使う必要があります。
+
+
 CakePHP should be installed with Composer
+=========================================
+
+CakePHPはComposerのインストールを必要とします。
 =========================================
 
 Since CakePHP can no longer easily be installed via PEAR, or in a shared
 directory, those options are no longer supported. Instead you should use
 `Composer <http://getcomposer.org>`_ to install CakePHP into your application.
 
+もはやCakePHPはPEARあるいは共有ディレクトリからインストールできなくなり、これらのオプションはサポートしません。
+その代わりに`Composer <http://getcomposer.org>`_を使ってインストールする必要があります。
+
 Namespaces
+==========
+名前空間
 ==========
 
 All of CakePHP's core classes are now namespaced and follow PSR-4 autoloading
@@ -61,10 +87,18 @@ specifications. For example **src/Cache/Cache.php** is namespaced as
 ``Cake\Cache\Cache``.  Global constants and helper methods like :php:meth:`__()`
 and :php:meth:`debug()` are not namespaced for convenience sake.
 
+CakePHPの全てのコアクラスは名前空間がつけられるようになり、PSR-4オートローディングの仕様にならっています。
+例えば、**src/Cache/Cache.php**は、``Cake\Cache\Cache``. のような名前空間です。 
+グローバル定数とヘルパー関数は :php:meth:`debug()`と:php:meth:`debug()`のように便宜上のための名前空間ではありません。
+
+
 Removed Constants
+=================
+削除された定数
 =================
 
 The following deprecated constants have been removed:
+下記の非推奨となった定数は削除されました。
 
 * ``IMAGES``
 * ``CSS``
@@ -74,26 +108,43 @@ The following deprecated constants have been removed:
 * ``CSS_URL``
 * ``DEFAULT_LANGUAGE``
 
+
 Configuration
+=============
+コンフィグレーション（設定）
 =============
 
 Configuration in CakePHP 3.0 is significantly different than in previous
 versions. You should read the :doc:`/development/configuration` documentation
 for how configuration is done in 3.0.
+CakePHP3.0のコンフィグレーションは以前のバージョンより大きく異なります。
+3.0の設定のやり方については:doc:`/development/configuration`ドキュメントを読む必要があります。
 
 You can no longer use ``App::build()`` to configure additional class paths.
 Instead you should map additional paths using your application's autoloader. See
 the section on :ref:`additional-class-paths` for more information.
+``App::build()``はクラスパスへ追加設定できなくなりました。
+その代わりに、アプリケーションのオートローダーを使って追加のパスをマッピングする必要があります。
+詳しくはref:`additional-class-paths`のセクションを見て下さい。
 
 Three new configure variables provide the path configuration for plugins,
 views and locale files. You can add multiple paths to ``App.paths.templates``,
 ``App.paths.plugins``, ``App.paths.locales`` to configure multiple paths for
 templates, plugins and locale files respectively.
 
+3つの新しい変数はプラグイン、ビューそしてロケールファイルのパスの設定を提供します。
+テンプレート、プラグイン、ロケールファイル、それぞれに対して複数のパスを追加することが出来ます。
+
 The config key ``www_root`` has been changed to ``wwwRoot`` for consistency. Please adjust
 your ``app.php`` config file as well as any usage of ``Configure::read('App.wwwRoot')``.
 
+コンフィグキー ``www_root`` は 一貫性のため``wwwRoot`` へ変わりました。
+``app.php`` 設定ファイルを ``Configure::read('App.wwwRoot')`` の使用方法に合わせて調整して下さい。
+
+
 New ORM
+=======
+新しいORM（オブジェクト関係マッピング)
 =======
 
 CakePHP 3.0 features a new ORM that has been re-built from the ground up. The
@@ -102,47 +153,95 @@ Upgrading to the new ORM will require extensive changes in any application that
 is being upgraded. See the new :doc:`/orm` documentation for information on how
 to use the new ORM.
 
+CakePHP3.0には、ゼロから再構築されたあたらしいORMを提供します。その新しいORMは、以前のものとは大きく異なり互換性がありません。新しいORMにアップグレードすると、任意のアプリケーションでの大規模な変更が必要になります。
+新しいORMの使用方法については、 :doc:`/ orm`のドキュメントを参照してください。
+
 
 Basics
 ======
+関数
+======
+
 
 * ``LogError()`` was removed, it provided no benefit and is rarely/never used.
 * The following global functions have been removed: ``config()``, ``cache()``,
   ``clearCache()``, ``convertSlashes()``, ``am()``, ``fileExistsInPath()``,
   ``sortByKey()``.
 
+* ``LogError()`` 使われることが殆どなく、利益を提供しないため削除されました。
+* 下記のグローバル関数が削除されました: ``config()``, ``cache()``,
+  ``clearCache()``, ``convertSlashes()``, ``am()``, ``fileExistsInPath()``,
+  ``sortByKey()``.
+
+
 Debugging
 =========
+デバッグ
+=========
+
 
 * ``Configure::write('debug', $bool)`` does not support 0/1/2 anymore. A simple boolean
   is used instead to switch debug mode on or off.
 
+* ``Configure::write('debug', $bool)``は、0/1/2は使用しなくなりました。代わりにonあるいはoffを使ってデバックモードを切り替えます。
+
+
 Object settings/configuration
 =============================
+オブジェクト設定
+=============================
+
 
 * Objects used in CakePHP now have a consistent instance-configuration storage/retrieval
   system. Code which previously accessed for example: ``$object->settings`` should instead
   be updated to use ``$object->config()``.
 
+CakePHPの中で使用されるオブジェクトは現在、一貫性のあるインスタンス構成ストレージ/検索を持っています。
+以前のコードの例は: ``$object->settings`` ですが、代わりに ``$object->config()``. を使用する必要があります。
+
+
 Cache
 =====
+キャッシュ
+=====
+
 
 * ``Memcache`` engine has been removed, use :php:class:`Cake\\Cache\\Cache\\Engine\\Memcached` instead.
+Memcacheエンジンは削除されました。代わりに、:php:class:`Cake\\Cache\\Cache\\Engine\\Memcached`を使用します。
+
 * Cache engines are now lazy loaded upon first use.
+今回、Cacheエンジンは最初の使用時に遅延ロードされます。
+
 * :php:meth:`Cake\\Cache\\Cache::engine()` has been added.
+* :php:meth:`Cake\\Cache\\Cache::engine()` が追加されました。
+
 * :php:meth:`Cake\\Cache\\Cache::enabled()` has been added. This replaced the
   ``Cache.disable`` configure option.
+* :php:meth:`Cake\\Cache\\Cache::enabled()` が追加されました。``Cache.disable`` はコンフィグオプションが変更されました。  
+  
 * :php:meth:`Cake\\Cache\\Cache::enable()` has been added.
+* :php:meth:`Cake\\Cache\\Cache::enable()` が追加されました。
+
 * :php:meth:`Cake\\Cache\\Cache::disable()` has been added.
+* :php:meth:`Cake\\Cache\\Cache::disable()` が追加されました。
+
 * Cache configurations are now immutable. If you need to change configuration
   you must first drop the configuration and then re-create it. This prevents
   synchronization issues with configuration options.
+* キャッシュの設定は今は変わりません。設定を変更する必要がある場合は、最初に再作成した構成を削除しなければなりません。これは設定オプションとの同期問題を防止します。
+  
 * ``Cache::set()`` has been removed. It is recommended that you create multiple
   cache configurations to replace runtime configuration tweaks previously
   possible with ``Cache::set()``.
+* ``Cache::set()`` は削除されました。
+  
 * All ``CacheEngine`` subclasses now implement a ``config()`` method.
+* すべてのキャッシュエンジンはコンフィグ関数のサブクラスとして実行します。
+
 * :php:meth:`Cake\\Cache\\Cache::readMany()`, :php:meth:`Cake\\Cache\\Cache::deleteMany()`,
   and :php:meth:`Cake\\Cache\\Cache::writeMany()` were added.
+* :php:meth:`Cake\\Cache\\Cache::readMany()`, :php:meth:`Cake\\Cache\\Cache::deleteMany()`,
+  and :php:meth:`Cake\\Cache\\Cache::writeMany()` が追加されました。
 
 All :php:class:`Cake\\Cache\\Cache\\CacheEngine` methods now honor/are responsible for handling the
 configured key prefix. The :php:meth:`Cake\\Cache\\CacheEngine::write()` no longer permits setting
@@ -150,9 +249,13 @@ the duration on write - the duration is taken from the cache engine's runtime co
 cache method with an empty key will now throw an :php:class:`InvalidArgumentException`, instead
 of returning ``false``.
 
+すべての:php:class:`Cake\\Cache\\Cache\\CacheEngine` はキープリフィックス設定をハンドリングするため信頼できる関数です。:php:meth:`Cake\\Cache\\CacheEngine::write()` は設定を許可しません。書込み中 - 書込み中はキャッシュエンジンのランタイム構成から取得されます。キャッシュ関数を呼び出し中は空のkeyと一緒に、falseを返します。
 
 Core
 ====
+コア
+====
+
 
 App
 ---
@@ -170,29 +273,59 @@ App
 
 Plugin
 ------
+プラグイン
+------
 
 - :php:meth:`Cake\\Core\\Plugin::load()` does not setup an autoloader unless
   you set the ``autoload`` option to ``true``.
+- :php:meth:`Cake\\Core\\Plugin::load()` は ``autoload`` オプションを ``true`` としない限り自動読込しません。
+
 - When loading plugins you can no longer provide a callable.
+- プログインを読み込む時、コーラブル（呼び出し可能？）を提供できなくなりました。
 - When loading plugins you can no longer provide an array of config files to
   load.
+- プラグインを読み込む時、設定ファイルから読み込まれる配列を提供できなくなりました。
 
 Configure
+---------
+構成
 ---------
 
 - ``Cake\Configure\PhpReader`` renamed to
   :php:class:`Cake\\Core\\Configure\\Engine\PhpConfig`
+- ``Cake\Configure\PhpReader`` は 
+  :php:class:`Cake\\Core\\Configure\\Engine\PhpConfig` へ名称変更されました。
+
 - ``Cake\Configure\IniReader`` renamed to
   :php:class:`Cake\\Core\\Configure\\Engine\IniConfig`
+- ``Cake\Configure\IniReader`` は
+  :php:class:`Cake\\Core\\Configure\\Engine\IniConfig` へ名称変更されました。
+  
 - ``Cake\Configure\ConfigReaderInterface`` renamed to
   :php:class:`Cake\\Core\\Configure\\ConfigEngineInterface`
+- ``Cake\Configure\ConfigReaderInterface`` は
+  :php:class:`Cake\\Core\\Configure\\ConfigEngineInterface`へ名称変更されました。
+
 - :php:meth:`Cake\\Core\\Configure::consume()` was added.
+- :php:meth:`Cake\\Core\\Configure::consume()` が追加されました。
+ 
 - :php:meth:`Cake\\Core\\Configure::load()` now expects the file name without
   extension suffix as this can be derived from the engine. E.g. using PhpConfig
   use ``app`` to load ``app.php``.
+- :php:meth:`Cake\\Core\\Configure::load()` now expects the file name without
+  extension suffix as this can be derived from the engine. E.g. using PhpConfig
+  use ``app`` to load ``app.php``.
+
+- :php:meth:`Cake\\Core\\Configure::load()` は今では、ファイル名を期待します
+  このような拡張機能のサフィックスは、エンジンから誘導することができます。
+例えば、PhpConfigを使用して ``app.php`` をロードするため ``app``を使用します。
+  
 - Setting a ``$config`` variable in PHP config file is deprecated.
   :php:class:`Cake\\Core\\Configure\\Engine\PhpConfig` now expects the config
   file to return an array.
+- PHPの設定ファイルの ``$のconfig`` 変数を設定することは推奨されません。
+  
+  
 - A new config engine :php:class:`Cake\\Core\\Configure\\Engine\JsonConfig` has
   been added.
 
