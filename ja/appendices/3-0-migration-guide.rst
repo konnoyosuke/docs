@@ -153,13 +153,13 @@ Upgrading to the new ORM will require extensive changes in any application that
 is being upgraded. See the new :doc:`/orm` documentation for information on how
 to use the new ORM.
 
-CakePHP3.0には、ゼロから再構築されたあたらしいORMを提供します。その新しいORMは、以前のものとは大きく異なり互換性がありません。新しいORMにアップグレードすると、任意のアプリケーションでの大規模な変更が必要になります。
-新しいORMの使用方法については、 :doc:`/ orm`のドキュメントを参照してください。
+CakePHP3.0には、ゼロから再構築されたあたらしいORMを提供します。その新しいORMは、以前のものとは大きく異なり互換性がありません。アップグレードするアプリケーションで、新しいORMにアップグレードすることは大規模な変更が必要になります。
+新しいORMの使用方法については、 :doc:`/ orm` のドキュメントを参照してください。
 
 
 Basics
 ======
-関数
+基本なこと
 ======
 
 
@@ -176,15 +176,14 @@ Basics
 
 Debugging
 =========
-デバッグ
+デバッグ方法
 =========
 
 
 * ``Configure::write('debug', $bool)`` does not support 0/1/2 anymore. A simple boolean
   is used instead to switch debug mode on or off.
 
-* ``Configure::write('debug', $bool)``は、0/1/2は使用しなくなりました。代わりにonあるいはoffを使ってデバックモードを切り替えます。
-
+* ``Configure::write('debug', $bool)``は、0/1/2は使用しなくなりました。真偽値を使ってデバッグモードのon、offを切り替えます。
 
 Object settings/configuration
 =============================
@@ -196,9 +195,8 @@ Object settings/configuration
   system. Code which previously accessed for example: ``$object->settings`` should instead
   be updated to use ``$object->config()``.
 
-CakePHPの中で使用されるオブジェクトは現在、一貫性のあるインスタンス構成ストレージ/検索を持っています。
+CakePHPの中で使用されるオブジェクトは現在、一貫性のあるインスタンス設定ストレージ/検索システムを持っています。
 以前のコードの例は: ``$object->settings`` ですが、代わりに ``$object->config()``. を使用する必要があります。
-
 
 Cache
 =====
@@ -228,7 +226,7 @@ Memcacheエンジンは削除されました。代わりに、:php:class:`Cake\\
 * Cache configurations are now immutable. If you need to change configuration
   you must first drop the configuration and then re-create it. This prevents
   synchronization issues with configuration options.
-* キャッシュの設定は今は変わりません。設定を変更する必要がある場合は、最初に再作成した構成を削除しなければなりません。これは設定オプションとの同期問題を防止します。
+* キャッシュの設定はイミュータブル(immutable)になりました。設定を変更する必要がある場合は、最初に作成した設定を消して再作成しなければなりません。これは設定オプションとの同期問題を防止します。
   
 * ``Cache::set()`` has been removed. It is recommended that you create multiple
   cache configurations to replace runtime configuration tweaks previously
@@ -249,7 +247,7 @@ the duration on write - the duration is taken from the cache engine's runtime co
 cache method with an empty key will now throw an :php:class:`InvalidArgumentException`, instead
 of returning ``false``.
 
-すべての:php:class:`Cake\\Cache\\Cache\\CacheEngine` はキープリフィックス設定をハンドリングするため信頼できる関数です。:php:meth:`Cake\\Cache\\CacheEngine::write()` は設定を許可しません。書込み中 - 書込み中はキャッシュエンジンのランタイム構成から取得されます。キャッシュ関数を呼び出し中は空のkeyと一緒に、falseを返します。
+すべての :php:class:`Cake\\Cache\\Cache\\CacheEngine` のメソッドは設定されたキープリフィックスを扱うのに信頼できて責任をもつメソッドとなりました。キャッシュ期間はキャッシュエンジンの来タイム設定から取得されます。:php:meth:`Cake\\Cache\\CacheEngine::write()` は、書込み時にキャッシュ期間の設定をさせないようになりました。空のキーでキャッシュメソッドを呼ぶとfalseを返す代わりに :php:class:`InvalidArgumentException` を投げるようになりました。
 
 Core
 ====
@@ -271,9 +269,18 @@ App
 - ``App::PREPEND`` has been removed.
 - ``App::REGISTER`` has been removed.
 
+- ``App::pluginPath()`` は削除されました。 代わりに ``CakePlugin::path()`` を使用します。
+- ``App::build()`` は削除されました。
+- ``App::location()`` は削除されました。
+- ``App::paths()`` は削除されました。
+- ``App::load()`` は削除されました。
+- ``App::objects()`` は削除されました。
+- ``App::RESET`` は削除されました。
+- ``App::APPEND`` は削除されました。
+- ``App::PREPEND`` は削除されました。
+- ``App::REGISTER`` は削除されました。
+
 Plugin
-------
-プラグイン
 ------
 
 - :php:meth:`Cake\\Core\\Plugin::load()` does not setup an autoloader unless
@@ -281,14 +288,12 @@ Plugin
 - :php:meth:`Cake\\Core\\Plugin::load()` は ``autoload`` オプションを ``true`` としない限り自動読込しません。
 
 - When loading plugins you can no longer provide a callable.
-- プログインを読み込む時、コーラブル（呼び出し可能？）を提供できなくなりました。
+- プラグインを読み込む時、callableを渡すことができなくなりました。
 - When loading plugins you can no longer provide an array of config files to
   load.
-- プラグインを読み込む時、設定ファイルから読み込まれる配列を提供できなくなりました。
+- プラグインを読み込む時、設定ファイルを読み込む用の配列を渡すことができなくなりました。
 
 Configure
----------
-構成
 ---------
 
 - ``Cake\Configure\PhpReader`` renamed to
@@ -312,19 +317,14 @@ Configure
 - :php:meth:`Cake\\Core\\Configure::load()` now expects the file name without
   extension suffix as this can be derived from the engine. E.g. using PhpConfig
   use ``app`` to load ``app.php``.
-- :php:meth:`Cake\\Core\\Configure::load()` now expects the file name without
-  extension suffix as this can be derived from the engine. E.g. using PhpConfig
-  use ``app`` to load ``app.php``.
-
-- :php:meth:`Cake\\Core\\Configure::load()` は今では、ファイル名を期待します
-  このような拡張機能のサフィックスは、エンジンから誘導することができます。
-例えば、PhpConfigを使用して ``app.php`` をロードするため ``app``を使用します。
+- :php:meth:`Cake\\Core\\Configure::load()` はエンジンから提供される、拡張子のサフィックスを除いたファイル名を期待します。
+例えば、PhpConfigを使用して ``app.php`` をロードするために ``app`` を使用します。
   
 - Setting a ``$config`` variable in PHP config file is deprecated.
   :php:class:`Cake\\Core\\Configure\\Engine\PhpConfig` now expects the config
   file to return an array.
-- PHPの設定ファイルの ``$のconfig`` 変数を設定することは推奨されません。
-  
+- PHPの設定ファイルの ``$config`` 変数を設定することは推奨されません。
+  :php:class:`Cake\\Core\\Configure\\Engine\PhpConfig` は設定ファイルへ配列を返すようになりました。
   
 - A new config engine :php:class:`Cake\\Core\\Configure\\Engine\JsonConfig` has
   been added.
@@ -341,30 +341,45 @@ of these methods have been extracted into traits. You can use the
 Console
 =======
 
-The ``cake`` executable has been moved from the ``app/Console`` directory to the
-``bin`` directory within the application skeleton. You can now invoke CakePHP's
-console with ``bin/cake``.
+.. The ``cake`` executable has been moved from the ``app/Console`` directory to the
+.. ``bin`` directory within the application skeleton. You can now invoke CakePHP's
+.. console with ``bin/cake``.
+
+``cake``実行可能ファイルは、``アプリ/ Console``ディレクトリからアプリケーションのスケルトン内の ``bin`` ディレクトリへ移動されました。
+CakePHPのコンソールから ``bin/cake`` を呼び出すことができます。
 
 TaskCollection Replaced
 -----------------------
+TaskCollectionがリプレイスされました
+-----------------------
 
-This class has been renamed to :php:class:`Cake\\Console\\TaskRegistry`.
-See the section on :doc:`/core-libraries/registry-objects` for more information
-on the features provided by the new class. You can use the ``cake upgrade
-rename_collections`` to assist in upgrading your code. Tasks no longer have
-access to callbacks, as there were never any callbacks to use.
+.. This class has been renamed to :php:class:`Cake\\Console\\TaskRegistry`.
+.. See the section on :doc:`/core-libraries/registry-objects` for more information
+.. on the features provided by the new class. You can use the ``cake upgrade
+.. rename_collections`` to assist in upgrading your code. Tasks no longer have
+.. access to callbacks, as there were never any callbacks to use.
+
+このクラスは :php:class:`Cake\\Console\\TaskRegistry`へ名称変更されました。
+新しいクラスによって提供されるクラスのより多くの情報は :doc:`/core-libraries/registry-objects` のセクションを参照してください。
+あなたのコードのアップグレードをアシストする ``cake upgrade rename_collections`` を使用することができます。
+Tasksはコールバックアクセス権がなくなり、多くのコールバックが使用されなくなりました。
 
 Shell
 -----
 
-- ``Shell::__construct()`` has changed. It now takes an instance of
-  :php:class:`Cake\\Console\\ConsoleIo`.
-- ``Shell::param()`` has been added as convenience access to the params.
+.. - ``Shell::__construct()`` has changed. It now takes an instance of
+..   :php:class:`Cake\\Console\\ConsoleIo`.
+- ``Shell::__construct()`` は変更されました。:php:class:`Cake\\Console\\ConsoleIo` のインスタンスから取得するようになります。  
+  
+.. - ``Shell::param()`` has been added as convenience access to the params.
+- ``Shell::param()`` はparamsへ便利にアクセスするために追加されました。
 
 Additionally all shell methods will be transformed to camel case when invoked.
 For example, if you had a ``hello_world()`` method inside a shell and invoked it
 with ``bin/cake my_shell hello_world``, you will need to rename the method
 to ``helloWorld``. There are no changes required in the way you invoke commands.
+
+
 
 ConsoleOptionParser
 -------------------
