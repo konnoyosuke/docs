@@ -257,10 +257,9 @@ Core
 
 App
 ---
-
-- ``App::pluginPath()`` has been removed. Use ``CakePlugin::path()`` instead.
-- ``App::build()`` has been removed.
-- ``App::location()`` has been removed.
+.. - ``App::pluginPath()`` has been removed. Use ``CakePlugin::path()`` instead.
+.. - ``App::build()`` has been removed.
+.. - ``App::location()`` has been removed.
 - ``App::paths()`` has been removed.
 - ``App::load()`` has been removed.
 - ``App::objects()`` has been removed.
@@ -296,8 +295,8 @@ Plugin
 Configure
 ---------
 
-- ``Cake\Configure\PhpReader`` renamed to
-  :php:class:`Cake\\Core\\Configure\\Engine\PhpConfig`
+.. - ``Cake\Configure\PhpReader`` renamed to
+..   :php:class:`Cake\\Core\\Configure\\Engine\PhpConfig`
 - ``Cake\Configure\PhpReader`` は 
   :php:class:`Cake\\Core\\Configure\\Engine\PhpConfig` へ名称変更されました。
 
@@ -423,18 +422,24 @@ Apiシェルは削除されました
 
 SchemaShell Removed
 -------------------
+スキーマシェルは削除されました
+-------------------------
 
 The SchemaShell was removed as it was never a complete database migration implementation
 and better tools such as `Phinx <https://phinx.org/>`_ have emerged. It has been replaced by
 the `CakePHP Migrations Plugin <https://github.com/cakephp/migrations>`_ which acts as a wrapper between
 CakePHP and `Phinx <https://phinx.org/>`_.
 
+スキーマシェルは完全なデータベースの移行ではなく `Phinx <https://phinx.org/>`_ のようなよりよりツールが登場したとして削除されました。 CakePHPからPhinx間のラッパーとして機能する `CakePHP Migrations Plugin <https://github.com/cakephp/migrations>`_ に置き換えられました。
+
 ExtractTask
 -----------
 
-- ``bin/cake i18n extract`` no longer includes untranslated validation
-  messages. If you want translated validation messages you should wrap those
-  messages in `__()` calls like any other content.
+.. - ``bin/cake i18n extract`` no longer includes untranslated validation
+..  messages. If you want translated validation messages you should wrap those
+..  messages in `__()` calls like any other content.
+
+- ``bin/cake i18n extract`` は、もはやバリデーションメッセージの翻訳を含みません。もしバリデーションメッセージを翻訳したいのであれば、文章を in `__()` でラップしてください。
 
 BakeShell / TemplateTask
 ------------------------
@@ -446,81 +451,146 @@ BakeShell / TemplateTask
   templating logic, allowing php code to be treated as plain text.
 - The ``bake view`` command has been renamed ``bake template``.
 
-Event
+.. Event
+.. =====
+イベント
 =====
 
-The ``getEventManager()`` method,  was removed on all objects that had it.  An
-``eventManager()`` method is now provided by the ``EventManagerTrait``. The
-``EventManagerTrait`` contains the logic of instantiating and keeping
-a reference to a local event manager.
+.. The ``getEventManager()`` method,  was removed on all objects that had it.  An
+.. ``eventManager()`` method is now provided by the ``EventManagerTrait``. The
+.. ``EventManagerTrait`` contains the logic of instantiating and keeping
+.. a reference to a local event manager.
 
-The Event subsystem has had a number of optional features removed. When
-dispatching events you can no longer use the following options:
+``getEventManager()`` 関数はすべてのオブジェクトが持つため削除されました。
+``eventManager()`` は ``EventManagerTrait``によって提供されるようになりました。
+``EventManagerTrait`` は、インスタンス化と維持のロジックとローカルイベントマネージャへの参照が含まれています。
 
-* ``passParams`` This option is now enabled always implicitly. You
-  cannot turn it off.
-* ``break`` This option has been removed. You must now stop events.
-* ``breakOn`` This option has been removed. You must now stop events.
+.. The Event subsystem has had a number of optional features removed. When
+.. dispatching events you can no longer use the following options:
 
-Log
-===
+イベントシステムは数多くのオプション機能が削除されました。
+ディスパッチャーイベントで、次のオプションを使用することはできません:
 
-* Log configurations are now immutable. If you need to change configuration
-  you must first drop the configuration and then re-create it. This prevents
-  synchronization issues with configuration options.
-* Log engines are now lazily loaded upon the first write to the logs.
-* :php:meth:`Cake\\Log\\Log::engine()` has been added.
-* The following methods have been removed from :php:class:`Cake\\Log\\Log` ::
-  ``defaultLevels()``, ``enabled()``, ``enable()``, ``disable()``.
-* You can no longer create custom levels using ``Log::levels()``.
-* When configuring loggers you should use ``'levels'`` instead of ``'types'``.
-* You can no longer specify custom log levels.  You must use the default set of
-  log levels.  You should use logging scopes to create custom log files or
-  specific handling for different sections of your application. Using
-  a non-standard log level will now throw an exception.
-* :php:trait:`Cake\\Log\\LogTrait` was added. You can use this trait in your
-  classes to add the ``log()`` method.
-* The logging scope passed to :php:meth:`Cake\\Log\\Log::write()` is now
-  forwarded to the log engines' ``write()`` method in order to provide better
-  context to the engines.
-* Log engines are now required to implement ``Psr\Log\LogInterface`` instead of
-  Cake's own ``LogInterface``. In general, if you extended :php:class:`Cake\\Log\\Engine\\BaseEngine`
-  you just need to rename the ``write()`` method to ``log()``.
+.. * ``passParams`` This option is now enabled always implicitly. You
+..   cannot turn it off.
+* ``passParams`` はオフにすることはできません。このオプションは、現在は常に暗黙的に有効になります。
+
+.. * ``break`` This option has been removed. You must now stop events.
+* ``break`` このオプションは削除され、stopイベンになりました。
+
+.. * ``breakOn`` This option has been removed. You must now stop events.
+* ``breakOn`` このオプションは削除され、stopイベンになりました。
+
+.. Log
+.. ===
+
+ログ
+=====
+
+.. * Log configurations are now immutable. If you need to change configuration
+..   you must first drop the configuration and then re-create it. This prevents
+..   synchronization issues with configuration options.
+* ログ設定はイミュータブル(immutable)になりました。設定を変更する必要がある場合、最初に再作成した構成を削除しなければなりません。これは構成オプションとの同期問題を防止します。
+
+.. * Log engines are now lazily loaded upon the first write to the logs.
+* ログエンジンは最初の書込するタイミングで遅延読込（*lazily loaded）するようになりました。
+
+.. * :php:meth:`Cake\\Log\\Log::engine()` has been added.
+* :php:meth:`Cake\\Log\\Log::engine()` が追加されました。
+
+.. * The following methods have been removed from :php:class:`Cake\\Log\\Log` ::
+..  ``defaultLevels()``, ``enabled()``, ``enable()``, ``disable()``.
+* 次のメソッドは :php:class:`Cake\\Log\\Log` ::
+``defaultLevels()``, ``enabled()``, ``enable()``, ``disable()``. 
+  
+.. * You can no longer create custom levels using ``Log::levels()``.
+``Log::levels()``. は独自のレベルを作成できなくなりました。
+
+.. * When configuring loggers you should use ``'levels'`` instead of ``'types'``.
+* ロガー(loggers)を設定する時は ``'types'`` の代わりに ``'levels'`` を使用してください。
+
+.. * You can no longer specify custom log levels.  You must use the default set of
+..  log levels.  You should use logging scopes to create custom log files or
+..  specific handling for different sections of your application. Using
+..   a non-standard log level will now throw an exception.
+* カスタムログレベルを指定することはできなくなりました。ログレベルのデフォルトセットを使用する必要があります。
+アプリケーションの異なるセクションにカスタムログファイルまたは特定の処理を作成するために、ログのスコープを使用する必要があります。非標準のログレベルを使用すると、例外がスローされるようになります。
+
+.. * :php:trait:`Cake\\Log\\LogTrait` was added. You can use this trait in your
+..   classes to add the ``log()`` method.
+* :php:trait:`Cake\\Log\\LogTrait` を追加されました。``log()`` メソッドを追加するにはこのトレイトを独自クラスで使用できます。 
+  
+.. * The logging scope passed to :php:meth:`Cake\\Log\\Log::write()` is now
+..  forwarded to the log engines' ``write()`` method in order to provide better
+..  context to the engines. 
+* :php:meth:`Cake\\Log\\Log::write()` に渡されていたログスコープは、
+より良い提供するためのログエンジンの ``write()`` メソッドへ進化しました。
+
+.. * Log engines are now required to implement ``Psr\Log\LogInterface`` instead of
+..   Cake's own ``LogInterface``. 
+.. In general, if you extended :php:class:`Cake\\Log\\Engine\\BaseEngine` 
+.. you just need to rename the ``write()`` method to ``log()``.
+*ログエンジンは、CakePHPの ``LogInterface`` の代わりに ``Psr\Log\LogInterface`` の実行が必要になります。一般的に、 :php:class:`Cake\\Log\\Engine\\BaseEngine` を拡張する場合、``write()`` メソッドから ``log()`` へリネームする必要があります。 
+
 * :php:meth:`Cake\\Log\\Engine\\FileLog` now writes files in ``ROOT/logs`` instead of ``ROOT/tmp/logs``.
 
-Routing
-=======
+:php:meth:`Cake\\Log\\Engine\\FileLog` は ``ROOT/tmp/logs`` ではなく、 ``ROOT/logs` に書き込まれます。
+
+.. Routing
+.. =======
 
 Named Parameters
+----------------
+名前付きパラメータ
 ----------------
 
 Named parameters were removed in 3.0. Named parameters were added in 1.2.0 as
 a 'pretty' version of query string parameters.  While the visual benefit is
 arguable, the problems named parameters created are not.
 
-Named parameters required special handling in CakePHP as well as any PHP or
-JavaScript library that needed to interact with them, as named parameters are
-not implemented or understood by any library *except* CakePHP.  The additional
-complexity and code required to support named parameters did not justify their
-existence, and they have been removed.  In their place you should use standard
-query string parameters or passed arguments.  By default ``Router`` will treat
-any additional parameters to ``Router::url()`` as query string arguments.
+名前付きパラメータはCakePHP3.0で削除されました。名前付きパラメータはクエリーストリングの良き変わりとして1.2.0で追加されました。見た目の利点は議論の余地があるが、一方で、作られた名前付きパラメータは議論の余地はありません。
+（開発したのは問題じゃない）
 
-Since many applications will still need to parse incoming URLs containing named
-parameters.  :php:meth:`Cake\\Routing\\Router::parseNamedParams()` has
-been added to allow backwards compatibility with existing URLs.
+.. Named parameters required special handling in CakePHP as well as any PHP or
+.. JavaScript library that needed to interact with them, as named parameters are
+.. not implemented or understood by any library *except* CakePHP.  The additional
+.. complexity and code required to support named parameters did not justify their
+.. existence, and they have been removed.  In their place you should use standard
+.. query string parameters or passed arguments.  By default ``Router`` will treat
+.. any additional parameters to ``Router::url()`` as query string arguments.
+
+名前付きパラメータはCakePHPで特別な処理が必要なのと、任意のPHPあるいはJavaScriptライブラリでそれらと一緒に互いに作用するように実装されていたか、CakePHP*以外*の任意のライブラリによって解釈されていました。
+その更なる複雑化と正当化していなかった名前付きパラメータをサポートできないため、削除されました。
+代わりとして、標準的なクエリーストリングか引数を渡します。
+デフォルトの ``Router`` では クエリーストリングを引数として ``Router::url()`` へ追加のパラメータを扱います。
+
+.. Since many applications will still need to parse incoming URLs containing named
+.. parameters.  :php:meth:`Cake\\Routing\\Router::parseNamedParams()` has
+.. been added to allow backwards compatibility with existing URLs.
+
+ただ、多くのアプリケーションは名前付きパラメータを含むURLを解析する必要があると思います。
+:php:meth:`Cake\\Routing\\Router::parseNamedParams()` は、既存のURLで後方互換性を可能にするために追加されました。
 
 
 RequestActionTrait
 ------------------
 
-- :php:meth:`Cake\\Routing\\RequestActionTrait::requestAction()` has had
-  some of the extra options changed:
 
-  - ``options[url]`` is now ``options[query]``.
-  - ``options[data]`` is now ``options[post]``.
-  - Named parameters are no longer supported.
+.. - :php:meth:`Cake\\Routing\\RequestActionTrait::requestAction()` has had
+..   some of the extra options changed:
 
+- :php:meth:`Cake\\Routing\\RequestActionTrait::requestAction()` は多くのオプションが変更されました。
+
+..  - ``options[url]`` is now ``options[query]``.
+  - ``options[url]`` は ``options[query]`` になりました。
+
+
+..  - ``options[data]`` is now ``options[post]``.
+  - ``options[data]`` は ``options[post]`` になりました。
+
+..  - Named parameters are no longer supported.
+  - 名前付きパラメータはサポートしません。
+  
 Router
 ------
 
@@ -592,8 +662,9 @@ Network
 Request
 -------
 
-* ``CakeRequest`` has been renamed to :php:class:`Cake\\Network\\Request`.
-* :php:meth:`Cake\\Network\\Request::port()` was added.
+.. * ``CakeRequest`` has been renamed to :php:class:`Cake\\Network\\Request`.
+.. * :php:meth:`Cake\\Network\\Request::port()` was added.
+
 * :php:meth:`Cake\\Network\\Request::scheme()` was added.
 * :php:meth:`Cake\\Network\\Request::cookie()` was added.
 * :php:attr:`Cake\\Network\\Request::$trustProxy` was added.  This makes it easier to put
@@ -607,6 +678,10 @@ Request
   template adds detectors for "mobile" and "tablet" using ``MobileDetect`` lib.
 * The method ``onlyAllow()`` has been renamed to ``allowMethod()`` and no longer accepts "var args".
   All method names need to be passed as first argument, either as string or array of strings.
+
+* ``CakeRequest`` は :php:class:`Cake\\Network\\Request`. へ名称変更されました。
+* :php:meth:`Cake\\Network\\Request::port()` が追加されました。
+
 
 Response
 --------
