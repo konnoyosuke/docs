@@ -249,17 +249,21 @@ of returning ``false``.
 
 すべての :php:class:`Cake\\Cache\\Cache\\CacheEngine` のメソッドは設定されたキープリフィックスを扱うのに信頼できて責任をもつメソッドとなりました。キャッシュ期間はキャッシュエンジンの来タイム設定から取得されます。:php:meth:`Cake\\Cache\\CacheEngine::write()` は、書込み時にキャッシュ期間の設定をさせないようになりました。空のキーでキャッシュメソッドを呼ぶとfalseを返す代わりに :php:class:`InvalidArgumentException` を投げるようになりました。
 
+..
 Core
 ====
+..
 コア
 ====
 
 
 App
 ---
-.. - ``App::pluginPath()`` has been removed. Use ``CakePlugin::path()`` instead.
-.. - ``App::build()`` has been removed.
-.. - ``App::location()`` has been removed.
+
+..
+- ``App::pluginPath()`` has been removed. Use ``CakePlugin::path()`` instead.
+- ``App::build()`` has been removed.
+- ``App::location()`` has been removed.
 - ``App::paths()`` has been removed.
 - ``App::load()`` has been removed.
 - ``App::objects()`` has been removed.
@@ -267,6 +271,7 @@ App
 - ``App::APPEND`` has been removed.
 - ``App::PREPEND`` has been removed.
 - ``App::REGISTER`` has been removed.
+..
 
 - ``App::pluginPath()`` は削除されました。 代わりに ``CakePlugin::path()`` を使用します。
 - ``App::build()`` は削除されました。
@@ -358,11 +363,13 @@ TaskCollection Replaced
 TaskCollectionがリプレイスされました
 -----------------------
 
-.. This class has been renamed to :php:class:`Cake\\Console\\TaskRegistry`.
-.. See the section on :doc:`/core-libraries/registry-objects` for more information
-.. on the features provided by the new class. You can use the ``cake upgrade
-.. rename_collections`` to assist in upgrading your code. Tasks no longer have
-.. access to callbacks, as there were never any callbacks to use.
+..
+This class has been renamed to :php:class:`Cake\\Console\\TaskRegistry`.
+See the section on :doc:`/core-libraries/registry-objects` for more information
+on the features provided by the new class. You can use the ``cake upgrade
+rename_collections`` to assist in upgrading your code. Tasks no longer have
+access to callbacks, as there were never any callbacks to use.
+..
 
 このクラスは :php:class:`Cake\\Console\\TaskRegistry`へ名称変更されました。
 新しいクラスによって提供されるクラスのより多くの情報は :doc:`/core-libraries/registry-objects` のセクションを参照してください。
@@ -372,17 +379,24 @@ Tasksはコールバックアクセス権がなくなり、多くのコールバ
 Shell
 -----
 
-.. - ``Shell::__construct()`` has changed. It now takes an instance of
-..   :php:class:`Cake\\Console\\ConsoleIo`.
-- ``Shell::__construct()`` は変更されました。:php:class:`Cake\\Console\\ConsoleIo` のインスタンスから取得するようになります。  
-  
-.. - ``Shell::param()`` has been added as convenience access to the params.
-- ``Shell::param()`` はparamsへ便利にアクセスするために追加されました。
+..
+- ``Shell::__construct()`` has changed. It now takes an instance of
+   :php:class:`Cake\\Console\\ConsoleIo`.
+..
 
-.. Additionally all shell methods will be transformed to camel case when invoked.
-.. For example, if you had a ``hello_world()`` method inside a shell and invoked it
-.. with ``bin/cake my_shell hello_world``, you will need to rename the method
-.. to ``helloWorld``. There are no changes required in the way you invoke commands.
+- ``Shell::__construct()`` は変更されました。:php:class:`Cake\\Console\\ConsoleIo` のインスタンスから取得するようになります。
+
+..
+- ``Shell::param()`` has been added as convenience access to the params.
+- ``Shell::param()`` はparamsへ便利にアクセスするために追加されました。
+..
+
+..
+Additionally all shell methods will be transformed to camel case when invoked.
+For example, if you had a ``hello_world()`` method inside a shell and invoked it
+with ``bin/cake my_shell hello_world``, you will need to rename the method
+to ``helloWorld``. There are no changes required in the way you invoke commands.
+..
 
 さらにすべてのシェル関数を呼び出す時は、キャメルケースへ変換しましょう。
 例えば、``bin/cake my_shell hello_world``のようにシェルで ``hello_world()`` を使用するとしたら
@@ -399,19 +413,28 @@ ConsoleInputArgument
 --------------------
 
 .. - ``ConsoleInputArgument::isEqualTo()`` has been added to compare two arguments.
+
 - ``ConsoleInputArgument::isEqualTo()`` 2つの引数を比較するために追加されました。
 
+..
 Shell / Task
 ============
+..
 シェル / タスク
 ============
 
-.. Shells and Tasks have been moved from ``Console/Command`` and
-.. ``Console/Command/Task`` to ``Shell`` and ``Shell/Task``.
+..
+Shells and Tasks have been moved from ``Console/Command`` and
+``Console/Command/Task`` to ``Shell`` and ``Shell/Task``.
+..
+
 シェルとタスクは ``Console/Command`` と ``Console/Command/Task`` から ``Shell`` と ``Shell/Task`` へ移動しました。
 
-.. ApiShell Removed
-.. ----------------
+..
+ApiShell Removed
+----------------
+..
+
 Apiシェルは削除されました
 ----------------
 
@@ -574,35 +597,53 @@ arguable, the problems named parameters created are not.
 
 RequestActionTrait
 ------------------
-
-
-.. - :php:meth:`Cake\\Routing\\RequestActionTrait::requestAction()` has had
-..   some of the extra options changed:
+..
+- :php:meth:`Cake\\Routing\\RequestActionTrait::requestAction()` has had
+some of the extra options changed:
+..
 
 - :php:meth:`Cake\\Routing\\RequestActionTrait::requestAction()` は多くのオプションが変更されました。
 
-..  - ``options[url]`` is now ``options[query]``.
-  - ``options[url]`` は ``options[query]`` になりました。
-
+.. - ``options[url]`` is now ``options[query]``.
+- ``options[url]`` は ``options[query]`` になりました。
 
 ..  - ``options[data]`` is now ``options[post]``.
-  - ``options[data]`` は ``options[post]`` になりました。
+- ``options[data]`` は ``options[post]`` になりました。
 
 ..  - Named parameters are no longer supported.
-  - 名前付きパラメータはサポートしません。
+- 名前付きパラメータはサポートしません。
   
 Router
 ------
 
-* Named parameters have been removed, see above for more information.
-* The ``full_base`` option has been replaced with the ``_full`` option.
-* The ``ext`` option has been replaced with the ``_ext`` option.
-* ``_scheme``, ``_port``, ``_host``, ``_base``, ``_full``, ``_ext`` options added.
-* String URLs are no longer modified by adding the plugin/controller/prefix names.
+.. * Named parameters have been removed, see above for more information.
+* 名前付きパラメータは削除されました。詳細については上記を参照してください。
+
+.. * The ``full_base`` option has been replaced with the ``_full`` option.
+* ``full_base`` オプションが  ``_full`` オプションに置き換えられました。
+
+.. * The ``ext`` option has been replaced with the ``_ext`` option.
+* ``ext`` オプションが ``_ext`` オプションへ置き換えられました。
+
+.. * ``_scheme``, ``_port``, ``_host``, ``_base``, ``_full``, ``_ext`` options added.
+* ``_scheme``, ``_port``, ``_host``, ``_base``, ``_full``, ``_ext`` オプションが追加されました。
+
+.. * String URLs are no longer modified by adding the plugin/controller/prefix names.
+文字列表現のURLは、pluginとcontrollerのprefix名の追加によってもはや変更されなくなりました。
+
+..
 * The default fallback route handling was removed.  If no routes
   match a parameter set ``/`` will be returned.
+..
+デフォルトのフォールバックのルートハンドリングは削除されました。
+
+..
 * Route classes are responsible for *all* URL generation including
   query string parameters. This makes routes far more powerful and flexible.
+..
+* ルートクラスは、クエリ文字列パラメータ以下を含む*すべての* URLの生成に関与しています。
+これはルートがはるかに強力で柔軟なことができます。
+
 * Persistent parameters were removed. They were replaced with
   :php:meth:`Cake\\Routing\\Router::urlFilter()` which allows
   a more flexible way to mutate URLs being reverse routed.
