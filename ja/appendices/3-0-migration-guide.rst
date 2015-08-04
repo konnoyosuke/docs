@@ -644,135 +644,291 @@ Router
 * ルートクラスは、クエリ文字列パラメータ以下を含む*すべての* URLの生成に関与しています。
 これはルートがはるかに強力で柔軟なことができます。
 
+..
 * Persistent parameters were removed. They were replaced with
   :php:meth:`Cake\\Routing\\Router::urlFilter()` which allows
   a more flexible way to mutate URLs being reverse routed.
+..
+永続的なパラメータは、除去されました。
+これらは、URLを変異するために、より柔軟な方法が逆にルーティングされることができる :php:meth:`Cake\\Routing\\Router::urlFilter()` へ置き換えられました。
+
+..
 * ``Router::parseExtensions()`` has been removed.
   Use :php:meth:`Cake\\Routing\\Router::extensions()` instead. This method
   **must** be called before routes are connected. It won't modify existing
   routes.
-* ``Router::setExtensions()`` has been removed.
+..
+* ``Router::parseExtensions()`` は削除されました。
+代わりに :php:meth:`Cake\\Routing\\Router::extensions()` を使います。
+ルートが接続される前にこのメソッドが呼び出されなければなりません。
+それは既存のルートを変更しません。
+
+.. * ``Router::setExtensions()`` has been removed.
   Use :php:meth:`Cake\\Routing\\Router::extensions()` instead.
+
+.. * ``Router::setExtensions()`` は削除されました。
+代わりに :php:meth:`Cake\\Routing\\Router::extensions()` を使います。
+
+..
 * ``Router::resourceMap()`` has been removed.
 * The ``[method]`` option has been renamed to ``_method``.
+..
+
+* ``Router::resourceMap()`` は削除されました。
+* ``[method]`` は ``_method``. へ名称変更しました。
+
+..
 * The ability to match arbitrary headers with ``[]`` style parameters has been
   removed. If you need to parse/match on arbitrary conditions consider using
   custom route classes.
-* ``Router::promote()`` has been removed.
+..
+* ``[]`` 形式のパラメータを使用して、任意のヘッダを照合する機能は削除されました。
+解析あるいは任意の条件で一致させるにはカスタムルートクラスを使用することを検討してください。
+
+.. * ``Router::promote()`` has been removed.
+* ``Router::promote()`` は削除されました。
+
 * ``Router::parse()`` will now raise an exception when a URL cannot be handled
   by any route.
+* URLが任意の経路によって処理することが出来ない時、``Router::parse()`` が例外を発生するようになりました。
+
+..
 * ``Router::url()`` will now raise an exception when no route matches a set of
   parameters.
+..
+* ルートがパラメータのセットと一致しない場合に ``Router::url()`` は例外を発生するようになりました。
+
+..
 * Routing scopes have been introduced. Routing scopes allow you to keep your
   routes file DRY and give Router hints on how to optimize parsing & reverse
   routing URLs.
+..
+
+##Todo
+ルーティングスコープが導入されました。ルーティングスコープは、あなたのルートファイルがDRYと維持し、
+ルータが解析を最適化＆ルーティングのURLを逆にする方法についてヒントを与えることができます。
 
 Route
 -----
 
-* ``CakeRoute`` was re-named to ``Route``.
+.. * ``CakeRoute`` was re-named to ``Route``.
+* ``CakeRoute`` は ``Route`` に名称変更されました。
+
+..
 * The signature of ``match()`` has changed to ``match($url, $context = [])``
   See :php:meth:`Cake\\Routing\\Route::match()` for information on the new signature.
+..
+* ``match()`` のシグネチャは `match($url, $context = [])`` に変更されました。
+  新しいシグネチャの情報は、:php:meth:`Cake\\Routing\\Route::match()` を見て下さい。
 
-Dispatcher Filters Configuration Changed
+
+.. Dispatcher Filters Configuration Changed
+.. ----------------------------------------
+ディスパッチャフィルター設定の変更
 ----------------------------------------
 
+..
 Dispatcher filters are no longer added to your application using ``Configure``.
 You now append them with :php:class:`Cake\\Routing\\DispatcherFactory`. This
 means if your application used ``Dispatcher.filters``, you should now use
 :php:meth:`Cake\\Routing\\DispatcherFactory::add()`.
+..
 
+ディスパッチャフィルターは、``Configure`` を使用して追加されなくなりました。
+:php:class:`Cake\\Routing\\DispatcherFactory` を一緒に追加してください。
+アプリケーションで ``Dispatcher.filters`` を使ったら、
+:php:meth:`Cake\\Routing\\DispatcherFactory::add()` を使うようにするということを意味します。
+
+..
 In addition to configuration changes, dispatcher filters have had some
 conventions updated, and features added. See the
 :doc:`/development/dispatch-filters` documentation for more information.
+..
+
+構成の変更に加えて、ディスパッチャフィルタは、いくつかの規則が更新され、機能が追加されました。
+詳細については、:doc:`/development/dispatch-filters` を参照してください。
 
 Filter\AssetFilter
 ------------------
-
+..
 * Plugin & theme assets handled by the AssetFilter are no longer read via
   ``include`` instead they are treated as plain text files.  This fixes a number
   of issues with JavaScript libraries like TinyMCE and environments with
   short_tags enabled.
 * Support for the ``Asset.filter`` configuration and hooks were removed. This
   feature can easily be replaced with a plugin or dispatcher filter.
+..
 
+* AssetFilterによって処理されたプラグインとテーマアセットは、``include`` を介して読み込まれなくなりました。代わりにプレーンテキストファイルとして扱われます。
+この多くの修正によってshort_tagsでJavaScriptのTinyMCEのようなライブラリや環境が有効になりました。
+``Asset.filter`` 設定とフックのサポートは削除されました。
+この機能は、簡単にプラグインまたはディスパッチャフィルタに置き換えることができます。
 
-Network
-=======
+.. Network
+.. =======
+ネットワーク
+==========
 
-Request
--------
+.. Request
+.. -------
+リクエスト
+---------
 
 .. * ``CakeRequest`` has been renamed to :php:class:`Cake\\Network\\Request`.
+* ``CakeRequest`` は :php:class:`Cake\\Network\\Request`へ名称変更されました。
 .. * :php:meth:`Cake\\Network\\Request::port()` was added.
-
-* :php:meth:`Cake\\Network\\Request::scheme()` was added.
-* :php:meth:`Cake\\Network\\Request::cookie()` was added.
+* :php:meth:`Cake\\Network\\Request::port()` が追加されました。
+.. * :php:meth:`Cake\\Network\\Request::scheme()` was added.
+* :php:meth:`Cake\\Network\\Request::scheme()` が追加されました。
+.. * :php:meth:`Cake\\Network\\Request::cookie()` was added.
+* :php:meth:`Cake\\Network\\Request::cookie()` が追加されました。
+..
 * :php:attr:`Cake\\Network\\Request::$trustProxy` was added.  This makes it easier to put
   CakePHP applications behind load balancers.
+..
+* :php:attr:`Cake\\Network\\Request::$trustProxy` が追加されました。
+これはロードバランサーの背後にCakePHPアプリケーションを簡単に配置できます。
+
+..
 * :php:attr:`Cake\\Network\\Request::$data` is no longer merged with the prefixed data
   key, as that prefix has been removed.
-* :php:meth:`Cake\\Network\\Request::env()` was added.
+..
+* :php:attr:`Cake\\Network\\Request::$data` はプリフィックスが削除されたように、プリフィックスデータキーとしてマージされなくなりました。
+.. * :php:meth:`Cake\\Network\\Request::env()` was added.
+* :php:meth:`Cake\\Network\\Request::env()` が追加されました。
+..
 * :php:meth:`Cake\\Network\\Request::acceptLanguage()` was changed from static method
   to non-static.
+..
+* :php:meth:`Cake\\Network\\Request::acceptLanguage()` はスタティックメソッドから非スタティックへ変更されました。
+..
 * Request detector for "mobile" has been removed from the core. Instead the app
   template adds detectors for "mobile" and "tablet" using ``MobileDetect`` lib.
+..
+* "mobile" のRequest detector（リクエストディテクター）はコアから削除されました。
+代わりにアプリテンプレートは "モバイル" と "タブレット" 用に ``MobileDetect`` libを追加します。
+
+..
 * The method ``onlyAllow()`` has been renamed to ``allowMethod()`` and no longer accepts "var args".
   All method names need to be passed as first argument, either as string or array of strings.
+..
+``onlyAllow()`` は `allowMethod()`` へ名称変更され、"var args" を受け付けません。
+
 
 * ``CakeRequest`` は :php:class:`Cake\\Network\\Request`. へ名称変更されました。
 * :php:meth:`Cake\\Network\\Request::port()` が追加されました。
 
 
-Response
---------
+.. Response
+レスポンス
+---------
 
+..
 * The mapping of mimetype ``text/plain`` to extension ``csv`` has been removed.
   As a consequence :php:class:`Cake\\Controller\\Component\\RequestHandlerComponent`
   doesn't set extension to ``csv`` if ``Accept`` header contains mimetype ``text/plain``
   which was a common annoyance when receiving a jQuery XHR request.
+..
+* ``csv`` 拡張子にmimetype ``text/plain`` のマッピングは削除されました。
+その結果として、:php:class:`Cake\\Controller\\Component\\RequestHandlerComponent`
 
-Sessions
-========
+``Accept`` ヘッダは mimetype ``text/plain`` が含まれている場合は、jQueryのXHRリクエストを受信したときには、一般的に困り事で、
+結果として :php:class:`Cake\\Controller\\Component\\RequestHandlerComponent` は ``csv`` に拡張子を設定しません。
 
+.. Sessions
+セッション
+==========
+
+..
 The session class is no longer static, instead the session can be accessed
 through the request object. See the :doc:`/development/sessions` documentation
 for using the session object.
+..
+セッションクラスはstaticではなくなり、代わりにセッションはリクエストオブジェクトスローを受け入れることができます。
+セッションオブジェクトを使うための詳細は :doc:`/development/sessions` のドキュメントを参照してください。
 
+..
 * :php:class:`Cake\\Network\\Session` and related session classes have been
-  moved under the ``Cake\Network`` namespace.
+moved under the ``Cake\Network`` namespace.
+..
+* :php:class:`Cake\\Network\\Session` と関連のセッションクラスは ``Cake\Network`` 名前空間の下に移動されました。
+
+..
 * ``SessionHandlerInterface`` has been removed in favor of the one provided by
   PHP itself.
-* The property ``Session::$requestCountdown`` has been removed.
+..
+* ``SessionHandlerInterface`` はPHP自信が提供するものに賛成することで削除されました。
+
+.. * The property ``Session::$requestCountdown`` has been removed.
+* ``Session::$requestCountdown`` プロパティは削除されました。
+
+..
 * The session checkAgent feature has been removed. It caused a number of bugs
   when chrome frame, and flash player are involved.
+..
+* The session checkAgent 機能は削除されました。
+それは、Chrome FrameとFrash Playerが関与しているとき、多くのバグを引き起こしました。
+
+..
 * The conventional sessions database table name is now ``sessions`` instead of
   ``cake_sessions``.
+..
+従来のセッションデータベースの名前は、 ``cake_sessions`` の代わりに ``sessions`` になりました。
+
+..
 * The session cookie timeout is automatically updated in tandem with the timeout
   in the session data.
+..
+* セッションクッキータイムアウトはセッションデータのタイムアウトと変更して自動的に更新されます。
+
+..
 * The path for session cookie now defaults to app's base path instead of "/".
   Also new config variable ``Session.cookiePath`` has been added to easily
   customize the cookie path.
+..
+セッションクッキーのパスは "/" の代わりに アプリケーションのbaseパスがデフォルト値になりました。
+
+..
 * A new convenience method :php:meth:`Cake\\Network\\Session::consume()` has been added
   to allow reading and deleting session data in a single step.
+..
+新しい便利なメソッド :php:meth:`Cake\\Network\\Session::consume()` は、単一のステップでセッションデータを読み出し、削除できるように追加されました。
+
+..
 * The default value of :php:meth:`Cake\\Network\\Session::clear()`'s argument ``$renew`` has been changed
   from ``true`` to ``false``.
+..
+:php:meth:`Cake\\Network\\Session::clear()` の引数 ``$renew`` のデフォルト値が変更されました。
 
 Network\\Http
 =============
 
-* ``HttpSocket`` is now :php:class:`Cake\\Network\\Http\\Client`.
+.. * ``HttpSocket`` is now :php:class:`Cake\\Network\\Http\\Client`.
+* ``HttpSocket`` は :php:class:`Cake\\Network\\Http\\Client` になりました。
+
+..
 * Http\Client has been re-written from the ground up. It has a simpler/easier to
   use API, support for new authentication systems like OAuth, and file uploads.
   It uses PHP's stream APIs so there is no requirement for cURL. See the
   :doc:`/core-libraries/httpclient` documentation for more information.
+..
+* Http\Client はゼロからリライトされています。これは、新しいOAuthのような認証システム、
+およびファイルのアップロードのための簡単な/使いやすくするためのAPIをサポートしています。
+それはcURLのための必要がないので、PHPのストリームAPIを使用しています
+詳細については、:doc:`/core-libraries/httpclient` を参照してください。
 
 Network\\Email
 ==============
 
+..
 * :php:meth:`Cake\\Network\\Email\\Email::config()` is now used to define
   configuration profiles. This replaces the ``EmailConfig`` classes in previous
   versions.
+..
+
+:php:meth:`Cake\\Network\\Email\\Email::config()` は
+
+
 * :php:meth:`Cake\\Network\\Email\\Email::profile()` replaces ``config()`` as
   the way to modify per instance configuration options.
 * :php:meth:`Cake\\Network\\Email\\Email::drop()` has been added to allow the
